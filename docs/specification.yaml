@@ -1,0 +1,94 @@
+openapi: 3.0.3
+info:
+  title: Swagger Invoice - OpenAPI 3.0
+  description: |-
+    Backend excercise
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+tags:
+  - name: invoice
+    description: Everything about the invoices
+paths:
+  /invoice/:
+    post:
+      tags:
+        - invoice
+      summary: Create an invoice
+      description: ''
+      operationId: postInvoice
+      requestBody:
+        $ref: '#/components/requestBodies/Invoice'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+    get:
+      tags:
+        - invoice
+      summary: List the invoices
+      description: Returns the list of invoices
+      operationId: getInvoice
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+components:
+  schemas:
+    BaseInvoice:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 79bfcc62-9428-4a91-8446-38626b191ad9
+        category:
+          type: string
+          enum:
+            - b2b
+            - b2c
+            - operations
+          example: operations
+        startPeriod:
+          type: string
+          format: date-time
+          example: 2024-07-01T00:00:00Z
+        endPeriod:
+          type: string
+          format: date-time
+          example: 2024-08-01T00:00:00Z
+    InvoiceToCreate:
+      allOf:
+        - $ref: '#/components/schemas/BaseInvoice'
+        - type: object
+          properties:
+            fileName:
+              type: string
+              format: binary
+              x-mimetype: application/pdf
+    Invoice:
+      allOf:
+        - $ref: '#/components/schemas/BaseInvoice'
+        - type: object
+          properties:
+            fileUrl:
+              type: string
+              format: uri
+              example: http://localhost:8002/invoices/79bfcc62-9428-4a91-8446-38626b191ad9.pdf
+  requestBodies:
+    Invoice:
+      description: Invoice object that should be added to our system
+      content:
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/InvoiceToCreate'
+      required: true
