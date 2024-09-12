@@ -1,3 +1,4 @@
+from repositories import invoice_repository
 from models.invoice_model import Invoice
 from uuid import uuid4
 from datetime import datetime
@@ -10,4 +11,5 @@ def create_new_invoice(body):
         end_period=datetime.fromisoformat(body['endPeriod']),
         file_url=f"http://localhost:8002/invoices/{uuid4()}.pdf"
     )
+    invoice_repository.create_invoice(new_invoice)
     return new_invoice
