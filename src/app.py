@@ -8,6 +8,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@db:5432/postgres'
 db.init_app(app)
 
+# Upload folder with the invoices
+app.config['UPLOAD_FOLDER'] = '/app/uploads'
+
 # Blueprints
 app.register_blueprint(invoice_blueprint)
 

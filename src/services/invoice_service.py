@@ -22,7 +22,7 @@ def get_all_invoices():
     results = [
         {
             "id": invoice.id,
-            "category": invoice.category,
+            "category": invoice.category.value,
             "startPeriod": invoice.start_period.isoformat(),
             "endPeriod": invoice.end_period.isoformat(),
             "fileUrl": invoice.file_url
