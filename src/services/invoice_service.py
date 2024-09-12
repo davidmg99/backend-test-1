@@ -13,3 +13,17 @@ def create_new_invoice(body):
     )
     invoice_repository.create_invoice(new_invoice)
     return new_invoice
+
+def get_all_invoices():
+    invoices = invoice_repository.get_all_invoices()
+    results = [
+        {
+            "id": invoice.id,
+            "category": invoice.category,
+            "startPeriod": invoice.start_period.isoformat(),
+            "endPeriod": invoice.end_period.isoformat(),
+            "fileUrl": invoice.file_url
+        }
+        for invoice in invoices
+    ]
+    return results

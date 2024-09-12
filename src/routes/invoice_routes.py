@@ -5,7 +5,7 @@ invoice_blueprint = Blueprint('invoice_blueprint', __name__)
 
 @invoice_blueprint.route('/invoice', methods=['GET'])
 def get_invoices():
-    return jsonify({'message':'aqui estan las facturas'})
+    return jsonify(invoice_service.get_all_invoices())
 
 @invoice_blueprint.route('/invoice', methods=['POST'])
 def create_invoice():
