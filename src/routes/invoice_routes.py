@@ -9,6 +9,7 @@ def get_invoices():
 
 @invoice_blueprint.route('/invoice', methods=['POST'])
 def create_invoice():
-    body = request.get_json()
-    invoice = invoice_service.create_new_invoice(body)
+    body = request.form
+    file = request.files['fileName']
+    invoice = invoice_service.create_new_invoice(body, file)
     return jsonify({"message": "Invoice created", "invoice_id": invoice.id}), 200

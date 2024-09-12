@@ -1,11 +1,19 @@
+import os
+from flask import current_app as app
+from werkzeug.utils import secure_filename
 from repositories import invoice_repository
 from models.invoice_model import Invoice, CategoryEnum
 from uuid import uuid4
 from datetime import datetime
 
-def create_new_invoice(body):
+def create_new_invoice(body, file):
     if body['category'] not in [cat.value for cat in CategoryEnum]:
         raise ValueError("Invalid category")
+
+
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file.save(file_path)
 
     new_invoice = Invoice(
         id=str(uuid4()),
