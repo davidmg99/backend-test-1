@@ -11,4 +11,4 @@ def get_invoices():
 def create_invoice():
     body = request.get_json()
     invoice = invoice_service.create_new_invoice(body)
-    return jsonify({'message' : invoice})
+    return jsonify({"message": "Invoice created", "invoice_id": invoice.id}), 200
