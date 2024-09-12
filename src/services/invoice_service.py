@@ -4,7 +4,7 @@ from uuid import uuid4
 from datetime import datetime
 
 def create_new_invoice(body):
-    if body['category'] not in [values.value for values in CategoryEnum]:
+    if body['category'] not in [cat.value for cat in CategoryEnum]:
         raise ValueError("Invalid category")
 
     new_invoice = Invoice(
