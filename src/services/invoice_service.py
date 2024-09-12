@@ -1,9 +1,12 @@
 from repositories import invoice_repository
-from models.invoice_model import Invoice
+from models.invoice_model import Invoice, CategoryEnum
 from uuid import uuid4
 from datetime import datetime
 
 def create_new_invoice(body):
+    if body['category'] not in [values.value for values in CategoryEnum]:
+        raise ValueError("Invalid category")
+
     new_invoice = Invoice(
         id=str(uuid4()),
         category=body['category'],
