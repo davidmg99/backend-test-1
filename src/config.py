@@ -7,7 +7,7 @@ db = SQLAlchemy()
 # Clase base para configuraciones generales
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    UPLOAD_FOLDER = '/app/uploads'
+    UPLOAD_FOLDER = '/app/invoices'
 
 # Configuración específica para desarrollo
 class DevelopmentConfig(Config):

@@ -9,8 +9,6 @@ from models.invoice_model import Invoice, CategoryEnum
 
 
 def create_new_invoice(body, file):
-    _validate_category(body['category'])
-
     if file and file.filename != "":
         new_filename = _save_file(file)
 
@@ -23,11 +21,6 @@ def create_new_invoice(body, file):
 def get_all_invoices():
     invoices = invoice_repository.get_all_invoices()
     return [_format_invoice(invoice) for invoice in invoices]
-
-
-def _validate_category(category):
-    if category not in [cat.value for cat in CategoryEnum]:
-        raise ValueError("Invalid category")
 
 
 def _save_file(file):
