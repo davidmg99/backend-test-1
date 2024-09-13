@@ -42,7 +42,7 @@ def _create_invoice_object(body, filename):
         category=body['category'],
         start_period=datetime.fromisoformat(body['startPeriod']),
         end_period=datetime.fromisoformat(body['endPeriod']),
-        file_url=f"http://localhost:8002/invoices/{file_id}.pdf"
+        file_url=f"http://localhost:8002/invoices/{filename}"
     )
 
 

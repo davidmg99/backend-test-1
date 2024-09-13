@@ -1,15 +1,26 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, send_from_directory, current_app as app
 from marshmallow import ValidationError
 from services import invoice_service
 from schemas.invoice_schema import InvoiceSchema
 
 invoice_blueprint = Blueprint('invoice_blueprint', __name__)
 
+# Get all invoices information
 @invoice_blueprint.route('/invoice', methods=['GET'])
 def get_invoices():
     return jsonify(invoice_service.get_all_invoices())
 
 
+# Access to an specific invoice
+@invoice_blueprint.route('/invoices/<filename>', methods=['GET'])
+def get_invoice(filename):
+    try:
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    except FileNotFoundError:
+        return jsonify({"error": "File not found"}), 404
+
+
+# Upload an invoice
 @invoice_blueprint.route('/invoice', methods=['POST'])
 def create_invoice():
     body = request.form.to_dict()
